@@ -107,20 +107,21 @@
   }
 </style>
 
-<script>
-  const overlay = document.getElementById("crt-overlay");
+<script is:inline>
+  (function() {
+    var overlay = document.getElementById("crt-overlay");
 
-  if (sessionStorage.getItem("crt-played")) {
-    // Already played this session — remove immediately
-    overlay?.remove();
-  } else {
-    sessionStorage.setItem("crt-played", "1");
-    if (overlay) {
-      overlay.addEventListener("animationend", (e) => {
-        if ((e as AnimationEvent).animationName === "crt-fade-out") {
-          overlay.remove();
-        }
-      });
+    if (sessionStorage.getItem("crt-played")) {
+      if (overlay) overlay.remove();
+    } else {
+      sessionStorage.setItem("crt-played", "1");
+      if (overlay) {
+        overlay.addEventListener("animationend", function(e) {
+          if (e.animationName === "crt-fade-out") {
+            overlay.remove();
+          }
+        });
+      }
     }
-  }
+  })();
 </script>
