@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'Divvi',
+    description: 'An open-source protocol for on-chain impact tracking and rewards distribution across DeFi ecosystems.',
+    href: 'https://github.com/divvi-xyz/divvi-protocol',
+    tags: ['Solidity', 'TypeScript', 'Next.js', 'EVM'],
+  },
+  {
+    title: 'Valora',
+    description: 'A mobile-first crypto wallet with fiat on/off-ramps, multichain support, and DeFi yield features for emerging markets.',
+    href: 'https://github.com/valora-xyz/wallet-stack',
+    tags: ['TypeScript', 'React Native', 'Viem', 'GCP'],
+  },
+  {
+    title: 'Project CETI',
+    description: 'Automated annotation pipeline using Vision Transformers to detect and attribute sperm whale vocalizations for language modeling research.',
+    href: 'https://dspace.mit.edu/bitstream/handle/1721.1/145038/JacobsonSchulte-fjacob-meng-eecs-2022-thesis.pdf?sequence=1&isAllowed=y',
+    tags: ['Python', 'PyTorch', 'Vision Transformers', 'ML'],
+  },
+];
+---
+
+<Layout title="projects — finn." description="Projects by Finnian Jacobson-Schulte">
+  <div class="max-w-3xl mx-auto px-8 py-12 lg:py-16">
+    <a href="/" class="inline-block text-xs text-[var(--color-muted)] mb-10 hover:text-[var(--color-accent)] transition-colors duration-150 back-link">
+      &larr; Back
+    </a>
+
+    <h1 class="text-lg font-semibold text-[var(--color-body)] uppercase tracking-widest mb-2">
+      <span class="text-[var(--color-accent)] mr-2">02.</span>All Projects
+    </h1>
+    <div class="border-b border-[var(--color-border)] mb-6"></div>
+
+    <div class="grid gap-4">
+      {projects.map((project) => (
+        <ProjectCard {...project} />
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .back-link {
+    text-decoration: none;
+  }
+  .back-link:hover {
+    text-decoration: none;
+  }
+</style>

@@ -1,18 +1,54 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
-  --color-bg: #0a0a0a;
-  --color-surface: #111111;
-  --color-border: #1e1e1e;
-  --color-muted: #555555;
-  --color-body: #cccccc;
-  --color-accent: #00ff41;
-  --color-accent-dim: #00b32d;
-  --color-cyan: #00d4ff;
-
   /* Typography */
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* Static colors for @theme (Tailwind needs these) */
+  --color-accent: #00aaff;
+  --color-accent-dim: #0077cc;
+  --color-cyan: #00d4ff;
+  --color-glow: rgba(0, 170, 255, 0.15);
+  --color-bg: #1a1a1a;
+  --color-surface: #222222;
+  --color-border: #2a2a2a;
+  --color-muted: #666666;
+  --color-body: #cccccc;
+  --color-card-hover: #252530;
+}
+
+/* Dark theme (default) */
+:root {
+  --color-bg: #1a1a1a;
+  --color-surface: #222222;
+  --color-border: #2a2a2a;
+  --color-muted: #666666;
+  --color-body: #cccccc;
+  --color-accent: #00aaff;
+  --color-accent-dim: #0077cc;
+  --color-glow: rgba(0, 170, 255, 0.15);
+  --color-card-hover: #252530;
+  --color-dot-grid: rgba(255, 255, 255, 0.03);
+  --color-scanline: rgba(0, 0, 0, 0.03);
+  --color-selection-bg: #00aaff;
+  --color-selection-text: #1a1a1a;
+}
+
+/* Light theme */
+[data-theme="light"] {
+  --color-bg: #f5f0e8;
+  --color-surface: #ece6da;
+  --color-border: #d4c8b8;
+  --color-muted: #8b7a6b;
+  --color-body: #4a3728;
+  --color-accent: #3d7ec7;
+  --color-accent-dim: #5a93d1;
+  --color-glow: rgba(61, 126, 199, 0.15);
+  --color-card-hover: #ebe4d8;
+  --color-dot-grid: rgba(0, 0, 0, 0.04);
+  --color-scanline: rgba(0, 0, 0, 0.02);
+  --color-selection-bg: #3d7ec7;
+  --color-selection-text: #f5f0e8;
 }
 
 @layer base {
@@ -28,11 +64,45 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s, color 0.2s;
   }
 
   body {
     margin: 0;
     min-height: 100vh;
+    position: relative;
+  }
+
+  /* Dot grid background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--color-dot-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanline overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      var(--color-scanline) 2px,
+      var(--color-scanline) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
   }
 
   a {
@@ -46,8 +116,8 @@
   }
 
   ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
+    background-color: var(--color-selection-bg);
+    color: var(--color-selection-text);
   }
 
   :focus-visible {
@@ -57,5 +127,22 @@
 
   :root {
     scrollbar-color: var(--color-border) var(--color-bg);
+    scroll-behavior: smooth;
   }
+
+  section[id] {
+    scroll-margin-top: 3rem;
+  }
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "_";
+  animation: blink 1s step-end infinite;
+  color: var(--color-accent);
 }

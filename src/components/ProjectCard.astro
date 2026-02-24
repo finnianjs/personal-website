@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  tags: string[];
+}
+
+const { title, description, href, tags } = Astro.props;
+---
+
+<a href={href} target="_blank" rel="noopener noreferrer" class="project-card group block border border-[var(--color-border)] border-l-2 border-l-[var(--color-accent-dim)] p-5 transition-all duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--color-card-hover)] hover:shadow-[0_0_16px_var(--color-glow)]">
+  <h3 class="text-[var(--color-body)] font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-150">{title}</h3>
+  <p class="text-[var(--color-muted)] text-xs leading-relaxed mb-4">{description}</p>
+  <div class="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <span class="tag text-[10px] px-2 py-0.5 border border-[var(--color-border)] text-[var(--color-muted)] group-hover:border-[var(--color-accent-dim)] group-hover:text-[var(--color-accent-dim)] transition-colors duration-150">
+        {tag}
+      </span>
+    ))}
+  </div>
+</a>
+
+<style>
+  .project-card {
+    text-decoration: none;
+  }
+  .project-card:hover {
+    text-decoration: none;
+  }
+</style>

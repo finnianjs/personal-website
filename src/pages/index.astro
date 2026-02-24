@@ -1,11 +1,230 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ExperienceCard from '../components/ExperienceCard.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+const sections = [
+  { id: 'about', label: 'About', num: '01' },
+  { id: 'projects', label: 'Projects', num: '02' },
+  { id: 'experience', label: 'Experience', num: '03' },
+  { id: 'fun', label: 'Fun', num: '04' },
+];
+
+const experiences = [
+  {
+    company: 'Stripe',
+    role: 'Software Engineer',
+    location: 'Boulder, CO',
+    dateRange: 'Dec 2025 — Present',
+    bullets: ['Building tools to make crypto and stablecoins more accessible to all'],
+    tags: ['Ruby', 'Crypto', 'Stablecoins'],
+  },
+  {
+    company: 'Valora',
+    role: 'Full Stack Software Engineer',
+    location: 'Boulder, CO',
+    dateRange: 'Aug 2023 — Nov 2025',
+    bullets: [
+      'Built and launched the Divvi platform end-to-end — Solidity smart contracts, dApp frontend, and backend services for on-chain impact tracking and rewards distribution',
+      'Led multichain expansion from Celo to additional EVM networks and extended the Earn feature to support multiple yield pools across stablecoins and DeFi platforms',
+    ],
+    tags: ['TypeScript', 'React Native', 'Solidity', 'Next.js', 'GCP', 'Viem'],
+  },
+  {
+    company: 'Meta',
+    role: 'Software Engineer, Feature Engineering Platform',
+    location: 'Menlo Park, CA',
+    dateRange: 'Aug 2022 — Aug 2023',
+    bullets: [
+      'Built monitoring dashboards and metrics to identify and reduce wasted compute across feature pipelines',
+      'Designed feature validation checks to prevent regressions and save costs from misconfigured pipelines',
+    ],
+    tags: ['Python', 'SQL', 'Data Validation', 'ML Infrastructure'],
+  },
+  {
+    company: 'MIT Project CETI (CSAIL)',
+    role: 'Graduate & Undergraduate Researcher',
+    location: 'Cambridge, MA',
+    dateRange: 'Sept 2020 — Aug 2022',
+    bullets: [
+      'Developed an automated annotation pipeline using a modified Vision Transformer to detect and attribute sperm whale vocalizations',
+      'Built a web-based annotation platform enabling biologists to tag whale behaviors for language modeling research',
+    ],
+    tags: ['Python', 'PyTorch', 'Vision Transformers', 'Data Visualization'],
+  },
+];
+
+const projects = [
+  {
+    title: 'Divvi',
+    description: 'An open-source protocol for on-chain impact tracking and rewards distribution across DeFi ecosystems.',
+    href: 'https://github.com/divvi-xyz/divvi-protocol',
+    tags: ['Solidity', 'TypeScript', 'Next.js', 'EVM'],
+  },
+  {
+    title: 'Valora',
+    description: 'A mobile-first crypto wallet with fiat on/off-ramps, multichain support, and DeFi yield features for emerging markets.',
+    href: 'https://github.com/valora-xyz/wallet-stack',
+    tags: ['TypeScript', 'React Native', 'Viem', 'GCP'],
+  },
+  {
+    title: 'Project CETI',
+    description: 'Automated annotation pipeline using Vision Transformers to detect and attribute sperm whale vocalizations for language modeling research.',
+    href: 'https://dspace.mit.edu/bitstream/handle/1721.1/145038/JacobsonSchulte-fjacob-meng-eecs-2022-thesis.pdf?sequence=1&isAllowed=y',
+    tags: ['Python', 'PyTorch', 'Vision Transformers', 'ML'],
+  },
+];
 ---
 
-<Layout title="finn.">
-  <main class="max-w-2xl mx-auto px-6 py-24">
-    <p class="text-[var(--color-accent)] text-sm mb-2">~/</p>
-    <h1 class="text-3xl font-bold text-[var(--color-body)] mb-6">finn j-s</h1>
-    <p class="text-[var(--color-muted)]">site under construction.</p>
-  </main>
+<Layout title="finn." description="Finnian Jacobson-Schulte — Software Engineer">
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    <!-- Left sidebar -->
+    <aside class="lg:w-[26rem] xl:w-[32rem] lg:fixed lg:top-0 lg:left-0 lg:h-screen flex flex-col justify-center px-10 lg:px-14 py-12 lg:py-16 lg:border-r border-[var(--color-border)]">
+      <div>
+        <h1 class="hero-name font-bold text-[var(--color-body)] mb-2" style="font-family: 'Silkscreen', cursive;">
+          <span class="block text-3xl">Finnian</span>
+          <span class="block text-2xl">Jacobson-Schulte</span>
+        </h1>
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[var(--color-accent-dim)] text-base">Software Engineer</p>
+          <ThemeToggle />
+        </div>
+        <p class="text-[var(--color-muted)] text-sm mb-12 cursor-blink">
+          Interested in decentralization and using technology to make the world a better place
+        </p>
+
+        <nav class="flex flex-col gap-2">
+          {sections.map((section) => (
+            <a
+              href={`#${section.id}`}
+              class="nav-link text-base text-[var(--color-muted)] hover:text-[var(--color-accent)] py-1 transition-colors duration-150"
+            >
+              <span class="text-[var(--color-accent-dim)] mr-2">{section.num}.</span>{section.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="mt-12">
+        <SocialLinks />
+      </div>
+    </aside>
+
+    <!-- Right content -->
+    <main class="flex-1 lg:ml-[26rem] xl:ml-[32rem] px-8 lg:px-12 xl:px-16 py-12 lg:py-16 max-w-5xl">
+
+      <!-- About -->
+      <section id="about" class="mb-24">
+        <h2 class="text-lg font-semibold text-[var(--color-body)] uppercase tracking-widest mb-2">
+          <span class="text-[var(--color-accent)] mr-2">01.</span>About
+        </h2>
+        <div class="border-b border-[var(--color-border)] mb-6"></div>
+        <div class="text-sm leading-relaxed space-y-4 text-[var(--color-body)]">
+          <p>
+            Hey — I'm Finn. I'm a software engineer at Stripe working on making crypto
+            and stablecoins more accessible to everyone. Based in Boulder, CO, previously in Boston studying computer science and mathematics at MIT.
+          </p>
+          <p>
+            I'm drawn to work that spans the full stack — from Solidity smart contracts
+            and on-chain data systems to React Native apps. I care a lot about decentralization and equal access to financial opportunities
+            for all. Previously I built DeFi tools at Valora — smart contracts, mobile wallets,
+            multichain infra — and worked on the feature engineering platform at Meta.
+          </p>
+          <p>
+            When I'm not writing code I'm probably running in the mountains,
+            reading sci-fi, experimenting with vegan recipes, or practicing my Spanish.
+          </p>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects" class="mb-24">
+        <h2 class="text-lg font-semibold text-[var(--color-body)] uppercase tracking-widest mb-2">
+          <span class="text-[var(--color-accent)] mr-2">02.</span>Projects
+        </h2>
+        <div class="border-b border-[var(--color-border)] mb-6"></div>
+        <div class="grid gap-4">
+          {projects.map((project) => (
+            <ProjectCard {...project} />
+          ))}
+        </div>
+        <a
+          href="/projects"
+          class="inline-block mt-6 text-xs text-[var(--color-muted)] border border-[var(--color-border)] px-4 py-2 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:shadow-[0_0_12px_var(--color-glow)] transition-all duration-150 all-projects-link"
+        >
+          All Projects &rarr;
+        </a>
+      </section>
+
+      <!-- Experience -->
+      <section id="experience" class="mb-24">
+        <h2 class="text-lg font-semibold text-[var(--color-body)] uppercase tracking-widest mb-2">
+          <span class="text-[var(--color-accent)] mr-2">03.</span>Experience
+        </h2>
+        <div class="border-b border-[var(--color-border)] mb-6"></div>
+        <div class="grid gap-4">
+          {experiences.map((exp) => (
+            <ExperienceCard {...exp} />
+          ))}
+        </div>
+      </section>
+
+      <!-- Fun -->
+      <section id="fun" class="mb-24">
+        <h2 class="text-lg font-semibold text-[var(--color-body)] uppercase tracking-widest mb-2">
+          <span class="text-[var(--color-accent)] mr-2">04.</span>Fun
+        </h2>
+        <div class="border-b border-[var(--color-border)] mb-6"></div>
+        <ul class="text-sm leading-relaxed space-y-4 text-[var(--color-body)] list-none">
+          <li>
+            <span class="text-[var(--color-accent)] mr-2">&gt;</span>
+            Currently learning Spanish using the comprehensible input method.
+            <a href="#" class="text-[var(--color-accent)] hover:underline">Learn more about my progress</a>.
+          </li>
+          <li>
+            <span class="text-[var(--color-accent)] mr-2">&gt;</span>
+            I like to run on trails. Check out my most recent results on
+            <a href="https://ultrasignup.com/m_results_participant.aspx?fname=Finnian&lname=Jacobson-Schulte" target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">UltraSignup</a> and
+            <a href="https://utmb.world/runner/6867837.finnian.jacobsonschulte" target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">UTMB World</a>.
+          </li>
+          <li>
+            <span class="text-[var(--color-accent)] mr-2">&gt;</span>
+            Vegan since 2020, vegetarian since age 5.
+            <a href="#" class="text-[var(--color-accent)] hover:underline">Read about why</a>, and check out some of my
+            <a href="#" class="text-[var(--color-accent)] hover:underline">favorite recipes</a>.
+          </li>
+          <li>
+            <span class="text-[var(--color-accent)] mr-2">&gt;</span>
+            Growing up I played piano a lot, take a listen
+            <a href="https://www.youtube.com/watch?v=8VLcXnL3kRs" target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">here</a> and
+            <a href="https://www.youtube.com/watch?v=JqZF6Z8s_Lo" target="_blank" rel="noopener noreferrer" class="text-[var(--color-accent)] hover:underline">here</a>.
+          </li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
 </Layout>
+
+<style>
+  .hero-name {
+    text-shadow: 0 0 20px rgba(0, 170, 255, 0.3), 0 0 40px rgba(0, 170, 255, 0.1);
+  }
+
+  .nav-link {
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(0, 170, 255, 0.4);
+  }
+
+  .all-projects-link {
+    text-decoration: none;
+  }
+  .all-projects-link:hover {
+    text-decoration: none;
+  }
+</style>
