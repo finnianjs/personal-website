@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import MatrixRain from '../components/MatrixRain.astro';
 
 interface Props {
   title: string;
@@ -30,6 +31,7 @@ const { title, description = 'Personal website.' } = Astro.props;
     </script>
   </head>
   <body>
+    <MatrixRain />
     <slot />
   </body>
 </html>

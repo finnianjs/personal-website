@@ -1,0 +1,126 @@
+---
+// CRT Power-On animation — mimics an old CRT monitor turning on.
+// A bright horizontal line appears, expands vertically, then the page fades in
+// with a phosphor glow and brief static/scanline flicker. Pure CSS, no JS frameworks.
+---
+
+<div id="crt-overlay" aria-hidden="true">
+  <div id="crt-line"></div>
+  <div id="crt-static"></div>
+</div>
+
+<style>
+  #crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: crt-fade-out 0.3s ease-out 1.3s forwards;
+  }
+
+  /* The bright horizontal beam line */
+  #crt-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: #fff;
+    box-shadow:
+      0 0 15px 4px var(--color-accent),
+      0 0 40px 8px var(--color-accent),
+      0 0 80px 16px rgba(0, 170, 255, 0.3);
+    transform: translateY(-50%) scaleX(0);
+    animation:
+      crt-line-appear 0.2s ease-out 0.1s forwards,
+      crt-line-expand 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  }
+
+  /* Static/noise flicker overlay */
+  #crt-static {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.015) 2px,
+        rgba(255, 255, 255, 0.015) 4px
+      );
+    animation: crt-static-flash 0.15s steps(2) 0.8s 3;
+  }
+
+  /* Step 1: Line appears horizontally */
+  @keyframes crt-line-appear {
+    from {
+      transform: translateY(-50%) scaleX(0);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+  }
+
+  /* Step 2: Line expands vertically to fill screen (CRT warm-up) */
+  @keyframes crt-line-expand {
+    0% {
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%) scaleX(1);
+      background: #fff;
+      box-shadow:
+        0 0 15px 4px var(--color-accent),
+        0 0 40px 8px var(--color-accent),
+        0 0 80px 16px rgba(0, 170, 255, 0.3);
+    }
+    40% {
+      top: 50%;
+      height: 2px;
+      transform: translateY(-50%) scaleX(1);
+    }
+    100% {
+      top: 0;
+      height: 100vh;
+      transform: translateY(0) scaleX(1);
+      background: var(--color-bg);
+      box-shadow: none;
+    }
+  }
+
+  /* Static flicker */
+  @keyframes crt-static-flash {
+    0% { opacity: 0.6; }
+    50% { opacity: 0; }
+    100% { opacity: 0.4; }
+  }
+
+  /* Fade out the entire overlay to reveal the page */
+  @keyframes crt-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; pointer-events: none; }
+  }
+</style>
+
+<script>
+  const overlay = document.getElementById("crt-overlay");
+
+  if (sessionStorage.getItem("crt-played")) {
+    // Already played this session — remove immediately
+    overlay?.remove();
+  } else {
+    sessionStorage.setItem("crt-played", "1");
+    if (overlay) {
+      overlay.addEventListener("animationend", (e) => {
+        if ((e as AnimationEvent).animationName === "crt-fade-out") {
+          overlay.remove();
+        }
+      });
+    }
+  }
+</script>
